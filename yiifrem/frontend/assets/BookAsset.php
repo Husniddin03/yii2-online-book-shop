@@ -16,8 +16,8 @@ class BookAsset extends AssetBundle
         'css/main.css',
         'css/noscript.css',
         'bootstrap/css/bootstrap.css',
-        'bootstrap/css/bootstrap.css.map',
-        'bootstrap/css/bootstrap.min.css',
+        // 'bootstrap/css/bootstrap.css.map',
+        // 'bootstrap/css/bootstrap.min.css',
     ];
     public $js = [
         'js/jquery.min.js',
