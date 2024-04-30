@@ -48,29 +48,21 @@ BookAsset::register($this);
         <nav id="menu">
             <h2>Menu</h2>
             <ul>
-                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="/book/index" class="active">Home</a></li>
 
-                <li><a href="products.html">Products</a></li>
+                <li><a href="/book/product">Products</a></li>
 
-                <li><a href="checkout.html">Checkout</a></li>
+                <li><a href="/book/basket">Basket</a></li>
 
                 <li>
-                    <a href="#" class="dropdown-toggle">About</a>
+                    <a href="/site/about" class="dropdown-toggle">About</a>
 
                     <ul>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="testimonials.html">Testimonials</a></li>
-                        <li><a href="terms.html">Terms</a></li>
+                        <li><a href="/site/about">About Us</a></li>
+                        <li><a href="/site/contact">Contact</a></li>
                     </ul>
                 </li>
-
-                <li><a href="contact.html">Contact Us</a></li>
-
-                <li><a href="/site/index">Home</a></li>
-                <li><a href="/site/about">About</a></li>
-                <li><a href="/site/contact">Contact</a></li>
-                <li><a href="/book/index">Books</a></li>
+                <li><a href="/book/contactus">Contact Us</a></li>
                 <li><a href="/site/signup">Signup</a></li>
                 <li><a href="/site/login">Login</a></li>
                 <li><a href="/site/logout">Logout</a></li>
@@ -84,7 +76,7 @@ BookAsset::register($this);
     <?= Alert::widget() ?>
     <?= $content ?>
 
-<!-- Footer -->
+    <!-- Footer -->
     <footer id="footer">
         <div class="inner">
             <section>
@@ -121,24 +113,24 @@ BookAsset::register($this);
                 <h2>Contact Info</h2>
 
                 <ul class="alt">
-                    <li><span class="fa fa-envelope-o"></span> <a href="mailto:husniddin13124041@email.com">husniddin13124041@gmail.com</a></li>
+                    <li><span class="fa fa-envelope-o"></span> <a href="mailto:husniddin13124041@email.com"> husniddin13124041@gmail.com</a></li>
                     <li><span class="fa fa-phone"></span> +998 (93) 129 1312</li>
-                    <li><span class="fa fa-map-pin"></span> 212 Barrington Court New York, ABC 10001 United States of America</li>
+                    <li><span class="fa fa-map-pin"></span> Tashkent University of Information Technologies, Samarkand Branch, Faculty of Computer Engineering, M254+HFP, street Usto Umara Djurakulova, Samarkand, Samarkand region</li>
                 </ul>
 
                 <h2>Follow Us</h2>
 
                 <ul class="icons">
-                    <li><a href="#" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
-                    <li><a href="#" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
-                    <li><a href="#" class="icon style2 fa-instagram"><span class="label">Instagram</span></a></li>
-                    <li><a href="#" class="icon style2 fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                    <li><a target="_blank" href="https://github.com/Husniddin03" class="icon style2 fa-github"><span class="label">Twitter</span></a></li>
+                    <li><a target="_blank" href="https://www.facebook.com/husniddin.gafforov" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
+                    <li><a target="_blank" href="https://instagram.com/profila/husniddin.2003.09.11" class="icon style2 fa-instagram"><span class="label">Instagram</span></a></li>
+                    <li><a target="_blank" href="https://t.me/muslimu3" class="icon style2 fa-telegram"><span class="label">LinkedIn</span></a></li>
                 </ul>
             </section>
 
             <ul class="copyright">
-                <li>Copyright © 2020 Company Name </li>
-                <li>Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></li>
+                <li>Copyright © 2024 Company Name </li>
+                <li>Template by: <a href="mailto:husniddin13124041@email.com">husniddin13124041@gmail.com</a></li>
             </ul>
         </div>
     </footer>

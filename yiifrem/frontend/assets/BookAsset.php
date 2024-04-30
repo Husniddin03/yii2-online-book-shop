@@ -12,12 +12,8 @@ class BookAsset extends AssetBundle
     public $basePath = '@webroot/book';
     public $baseUrl = '@web/book';
     public $css = [
-        'css/font-awesome.min.css',
+        'bootstrap/css/bootstrap.min.css',
         'css/main.css',
-        'css/noscript.css',
-        'bootstrap/css/bootstrap.css',
-        // 'bootstrap/css/bootstrap.css.map',
-        // 'bootstrap/css/bootstrap.min.css',
     ];
     public $js = [
         'js/jquery.min.js',
