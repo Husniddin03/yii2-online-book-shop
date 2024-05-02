@@ -38,4 +38,10 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
+    <?php
+    foreach ($bookimage as $image) {
+        echo '<img src="/uploads/'.$image->path.'" width="100" height="100" />';
+    }
+    ?>
+
 </div>

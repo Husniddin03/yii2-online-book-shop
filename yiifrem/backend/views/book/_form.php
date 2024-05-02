@@ -18,11 +18,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'createdtime')->textInput() ?>
+    <?= $form->field($model, 'createdtime')->textInput(['value' => date('Y-m-d'), 'type'=>'date']) ?>
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'imageFiles[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>
+    <?= $form->field($model, 'imageFiles[]')->fileInput(['multiple' => true, 'accept' => 'image/*', 'class'=>'m-3']) ?>
 
 
     <div class="form-group">

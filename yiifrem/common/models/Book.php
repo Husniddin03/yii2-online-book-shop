@@ -68,7 +68,7 @@ class Book extends \yii\db\ActiveRecord
     {
         if ($this->validate()) { 
             foreach ($this->imageFiles as $file) {
-                $file->saveAs('../../uploads/' .$file->baseName. $imageName . '.' . $file->extension);
+                $file->saveAs('uploads/' .$file->baseName. $imageName . '.' . $file->extension);
             }
             return true;
         } else {

@@ -57,8 +57,11 @@ class BookController extends Controller
      */
     public function actionView($id)
     {
+        $bookimage = new Bookimg();
+        $bookimage = $bookimage->find()->where(['bookid' => $id])->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'bookimage' => $bookimage,
         ]);
     }
 
@@ -106,9 +109,33 @@ class BookController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+              
+        if ($this->request->isPost) {
+            $del = Bookimg::find()->where(['bookid'=>$id])->all();
+            foreach($del as $item){
+                unlink('uploads/'.$item->path);
+            }
+            Bookimg::deleteAll([
+                'bookid' => $id,
+            ]);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post()) && $model->save()) {
+                $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+                $imageName = time();
+                foreach ($model->imageFiles as $imageFile) {
+                    $bookimage = new Bookimg();
+                    $bookimage->bookid = $model->id;
+                    $bookimage->path  = $imageFile->baseName.$imageName.'.'.$imageFile->extension;
+                    $bookimage->save();
+                }
+                if ($model->upload($imageName)) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }else{
+                echo 'wegfqefq'; die();
+            }
+        } else {
+            $model->loadDefaultValues();
         }
 
         return $this->render('update', [
@@ -125,7 +152,14 @@ class BookController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $del = Bookimg::find()->where(['bookid'=>$id])->all();
+        foreach($del as $item){
+            unlink('uploads/'.$item->path);
+        }
+        Bookimg::deleteAll([
+            'bookid' => $id,
+        ]);
+        $this->findModel($id)->delete();        
 
         return $this->redirect(['index']);
     }
