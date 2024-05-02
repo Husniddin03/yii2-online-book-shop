@@ -3,10 +3,12 @@
 namespace backend\controllers;
 
 use common\models\Book;
+use common\models\Bookimg;
 use common\models\BookSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * BookController implements the CRUD actions for Book model.
@@ -71,7 +73,19 @@ class BookController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+                $imageName = time();
+                foreach ($model->imageFiles as $imageFile) {
+                    $bookimage = new Bookimg();
+                    $bookimage->bookid = $model->id;
+                    $bookimage->path  = $imageFile->baseName.$imageName.'.'.$imageFile->extension;
+                    $bookimage->save();
+                }
+                if ($model->upload($imageName)) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }else{
+                echo 'wegfqefq'; die();
             }
         } else {
             $model->loadDefaultValues();
