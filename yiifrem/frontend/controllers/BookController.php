@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Book;
+use common\models\Bookimg;
 use common\models\BookSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -38,12 +39,10 @@ class BookController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new BookSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
+        $model = new Book();
+        $data = $model->find()->limit(6)->all();
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'data' => $data,
         ]);
     }
 

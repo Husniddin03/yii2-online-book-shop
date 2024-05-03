@@ -39,8 +39,11 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
     <?php
+    
+    echo '<a href="/uploads/bookfiles/'.$bookfile->path.'" width="100" height="100">'.$bookfile->path.'</a>';
+
     foreach ($bookimage as $image) {
-        echo '<img src="/uploads/'.$image->path.'" width="100" height="100" />';
+        echo '<img src="/uploads/bookimgs/'.$image->path.'" width="100" height="100" />';
     }
     ?>
 

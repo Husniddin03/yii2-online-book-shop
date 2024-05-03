@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\Book;
+use common\models\Bookfile;
 use common\models\Bookimg;
 use common\models\BookSearch;
 use yii\web\Controller;
@@ -59,9 +60,14 @@ class BookController extends Controller
     {
         $bookimage = new Bookimg();
         $bookimage = $bookimage->find()->where(['bookid' => $id])->all();
+
+        $bookfile = new Bookfile();
+        $bookfile = $bookfile->find()->where(['bookid' => $id])->one();
+
         return $this->render('view', [
             'model' => $this->findModel($id),
             'bookimage' => $bookimage,
+            'bookfile' => $bookfile,
         ]);
     }
 
@@ -76,19 +82,27 @@ class BookController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
+
                 $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+                $model->bookFiles = UploadedFile::getInstance($model, 'bookFiles');
                 $imageName = time();
+
+                $bookfile = new Bookfile();
+                $bookfile->bookid = $model->id;
+                $bookfile->path = $model->bookFiles->baseName.$imageName.'.'.$model->bookFiles->extension;
+                $bookfile->save();
+
                 foreach ($model->imageFiles as $imageFile) {
                     $bookimage = new Bookimg();
                     $bookimage->bookid = $model->id;
                     $bookimage->path  = $imageFile->baseName.$imageName.'.'.$imageFile->extension;
                     $bookimage->save();
                 }
-                if ($model->upload($imageName)) {
+                if ($model->uploadimg($imageName) && $model->uploadfile($imageName)) {
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             }else{
-                echo 'wegfqefq'; die();
+                echo 'xatolik'; die();
             }
         } else {
             $model->loadDefaultValues();
@@ -113,26 +127,39 @@ class BookController extends Controller
         if ($this->request->isPost) {
             $del = Bookimg::find()->where(['bookid'=>$id])->all();
             foreach($del as $item){
-                unlink('uploads/'.$item->path);
+                unlink('uploads/bookimgs/'.$item->path);
             }
             Bookimg::deleteAll([
                 'bookid' => $id,
             ]);
 
+            $delf = Bookfile::find()->where(['bookid'=>$id])->one();
+            unlink('uploads/bookfiles/'.$delf->path);
+            Bookfile::deleteAll([
+                'bookid' => $id,
+            ]);
+
             if ($model->load($this->request->post()) && $model->save()) {
                 $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+                $model->bookFiles = UploadedFile::getInstance($model, 'bookFiles');
                 $imageName = time();
+
+                $bookfile = new Bookfile();
+                $bookfile->bookid = $model->id;
+                $bookfile->path = $model->bookFiles->baseName.$imageName.'.'.$model->bookFiles->extension;
+                $bookfile->save();
+
                 foreach ($model->imageFiles as $imageFile) {
                     $bookimage = new Bookimg();
                     $bookimage->bookid = $model->id;
                     $bookimage->path  = $imageFile->baseName.$imageName.'.'.$imageFile->extension;
                     $bookimage->save();
                 }
-                if ($model->upload($imageName)) {
+                if ($model->uploadimg($imageName) && $model->uploadfile($imageName)) {
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             }else{
-                echo 'wegfqefq'; die();
+                echo 'xatolik'; die();
             }
         } else {
             $model->loadDefaultValues();
@@ -154,11 +181,18 @@ class BookController extends Controller
     {
         $del = Bookimg::find()->where(['bookid'=>$id])->all();
         foreach($del as $item){
-            unlink('uploads/'.$item->path);
+            unlink('uploads/bookimgs/'.$item->path);
         }
         Bookimg::deleteAll([
             'bookid' => $id,
         ]);
+        
+        $delf = Bookfile::find()->where(['bookid'=>$id])->one();
+        unlink('uploads/bookfiles/'.$delf->path);
+        Bookfile::deleteAll([
+            'bookid' => $id,
+        ]);
+
         $this->findModel($id)->delete();        
 
         return $this->redirect(['index']);

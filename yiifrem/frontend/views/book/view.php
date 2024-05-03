@@ -1,17 +1,41 @@
+<?php
+
+use common\models\Book;
+use common\models\Bookimg;
+
+$bookimg = new Bookimg();
+$imgs = $bookimg->find()->where(['bookid' => $model->id])->all();
+?>
+
 <div id="main">
     <div class="inner">
-        <h1>Lorem ipsum dolor sit amet <span class="pull-right"><del>$99.00</del> $79.00</span></h1>
+        <h1><?=$model->name?> <span class="pull-right"><del><?=$model->price+30000?> USZ</del> <?=$model->price?> USZ</span></h1>
         
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-5">
-                    <img src="/images/product-1-720x480.jpg" class="img-fluid" alt="">
+
+                <div id="carouselExampleControls" class="carousel slide col-md-5" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <?php $i=true; foreach($imgs as $img){ ?>
+                        <div class="carousel-item <?php if($i){ echo 'active';$i=false;} ?>">
+                        <img class="d-block w-100 img-fluid" src="/uploads/bookimgs/<?=$img->path?>" alt="First slide">
+                        </div>
+                        <?php }?>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
 
                 <div class="col-md-7">
-                    <p> Quas qui, repellendus ullam, quam possimus ducimus earum!</p>
+                    <p><?=$model->description?></p>
 
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, iste neque, ut recusandae quibusdam perferendis qui modi aliquam quaerat molestiae.</p>
+                    <p><?=$model->description?></p>
 
                     <div class="row">
                         <div class="col-sm-4">
@@ -53,46 +77,28 @@
             <h2 class="h2">Similar Products</h2>
 
             <!-- Products -->
-            <section class="tiles">
-                <article class="style1">
-                    <span class="image">
-                        <img src="/images/product-1-720x480.jpg" alt="" />
-                    </span>
-                    <a href="product-details.html">
-                        <h2>Lorem ipsum dolor sit amet, consectetur</h2>
-                        
-                        <p><del>$19.00</del> <strong>$19.00</strong></p>
+        <section class="tiles">
+            <?php
+            $model = new Book();
+            $data = $model->find()->limit(3)->all();
+                foreach($data as $item){ 
+                    $bookimg = new Bookimg();
+                    $imgs = $bookimg->find()->where(['bookid' => $item->id])->one();
+                    ?>
+                    <article class="style1">
+                        <span class="image">
+                            <img src="/uploads/bookimgs/<?=$imgs->path?>" alt="<?=$imgs->path?>" />
+                        </span>
+                        <a href="/book/view?id=<?=$item->id?>">
+                            <h2><?=$item->name?></h2>
+                            
+                            <p><del><?=$item->price+30000?> USZ</del> <strong><?=$item->price?> USZ</strong></p>
 
-                        <p>Vestibulum id est eu felis vulputate hendrerit uspendisse dapibus turpis in </p>
-                    </a>
-                </article>
-
-                <article class="style2">
-                    <span class="image">
-                        <img src="/images/product-2-720x480.jpg" alt="" />
-                    </span>
-                    <a href="product-details.html">
-                        <h2>Lorem ipsum dolor sit amet, consectetur</h2>
-                        
-                        <p><del>$19.00</del> <strong>$19.00</strong></p>
-
-                        <p>Vestibulum id est eu felis vulputate hendrerit uspendisse dapibus turpis in </p>
-                    </a>
-                </article>
-
-                <article class="style3">
-                    <span class="image">
-                        <img src="/images/product-6-720x480.jpg" alt="" />
-                    </span>
-                    <a href="product-details.html">
-                        <h2>Lorem ipsum dolor sit amet, consectetur</h2>
-                        
-                        <p><del>$19.00</del> <strong>$19.00</strong></p>
-
-                        <p>Vestibulum id est eu felis vulputate hendrerit uspendisse dapibus turpis in </p>
-                    </a>
-                </article>
-            </section>
+                            <p><?=$item->description?></p>
+                        </a>
+                    </article>
+            <?php } ?>
+        </section>
         </div>
     </div>
 </div>

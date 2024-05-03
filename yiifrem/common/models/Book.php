@@ -19,6 +19,7 @@ use Yii;
 class Book extends \yii\db\ActiveRecord
 {
     public $imageFiles;
+    public $bookFiles;
     /**
      * {@inheritdoc}
      */
@@ -37,6 +38,7 @@ class Book extends \yii\db\ActiveRecord
             [['description'], 'string'],
             [['name', 'author', 'price'], 'string', 'max' => 255],
             [['imageFiles'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxFiles' => 4],
+            [['bookFiles'], 'file', 'skipOnEmpty' => true, 'extensions' => 'pdf, doc, xls, docx'],
         ];
     }
 
@@ -64,12 +66,21 @@ class Book extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Bookimg::class, ['bookid' => 'id']);
     }
-    public function upload($imageName)
+    public function uploadimg($imageName)
     {
         if ($this->validate()) { 
             foreach ($this->imageFiles as $file) {
-                $file->saveAs('uploads/' .$file->baseName. $imageName . '.' . $file->extension);
+                $file->saveAs('uploads/bookimgs/' .$file->baseName. $imageName . '.' . $file->extension);
             }
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function uploadfile($imageName)
+    {
+        if (true) {
+            $this->bookFiles->saveAs('uploads/bookfiles/' . $this->bookFiles->baseName .$imageName. '.' . $this->bookFiles->extension);
             return true;
         } else {
             return false;
