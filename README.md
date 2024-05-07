@@ -1,1 +1,1 @@
-<h1>Husniddin</h1>
+<h1 style='color:red;'>Husniddin</h1>
